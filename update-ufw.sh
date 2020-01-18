@@ -1,29 +1,9 @@
 #!/bin/bash
 
+TOKEN="$1"
+WHITELIST_S="$2"
 
-POSITIONAL=()
-while [[ $# -gt 0 ]]
-do
-key="$1"
-
-case $key in
-  --hcloud-token)
-    TOKEN="$2"
-    shift
-    shift
-  ;;
-  --whitelist)
-    WHITELIST_S="$2"
-    shift
-    shift
-  ;;
-  *)
-    POSITIONAL+=("$1")
-    shift
-  ;;
-esac
-done
-set -- "${POSITIONAL[@]}" 
+ufw -f enable
 
 ufw allow proto tcp from any to any port 22,80,443
 
@@ -44,4 +24,3 @@ ufw allow from 10.42.0.0/16
 
 ufw -f default deny incoming
 ufw -f default allow outgoing
-ufw -f enable
