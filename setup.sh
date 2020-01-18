@@ -9,7 +9,7 @@ curl -o /usr/local/bin/update-ufw.sh https://raw.githubusercontent.com/vitobotta
 
 chmod +x /usr/local/bin/update-ufw.sh
 
-/usr/local/bin/update-ufw.sh
+/usr/local/bin/update-ufw.sh ${TOKEN} ${WHITELIST_S}
 
 cat <<EOF >> /etc/crontab
 * * * * * root /usr/local/bin/update-ufw.sh ${TOKEN} ${WHITELIST_S}
