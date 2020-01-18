@@ -3,6 +3,11 @@
 TOKEN="$1"
 WHITELIST_S="$2"
 
+sed -i 's/[#]*PermitRootLogin yes/PermitRootLogin prohibit-password/g' /etc/ssh/sshd_config
+sed -i 's/[#]*PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
+
+systemctl restart sshd
+
 curl -o /usr/local/sbin/apt-get https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/apt-get
 
 chmod +x /usr/local/sbin/apt-get
