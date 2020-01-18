@@ -3,9 +3,9 @@
 TOKEN="$1"
 WHITELIST_S="$2"
 
-ufw -f enable
-
 ufw allow proto tcp from any to any port 22,80,443
+
+ufw -f enable
 
 IFS=', ' read -r -a WHITELIST <<< "$WHITELIST_S"
 
