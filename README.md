@@ -9,7 +9,7 @@ NOTES:
 * the node driver allows selecting a private network if configured in the Hetzner Cloud project, however due to a limitation with Docker Machine (which node drivers use behind the scenes) the communication between the nodes for the Kubernetes services actually goes through the public interface, effectively rendering the private network useless in this case. For this reason, besides the firewall setup I recommend selecting [Weave](https://www.weave.works/blog/cni-for-docker-containers/) as the network provider when creating the cluster with Rancher, so to enable encryption of all the traffic between the nodes
 * I recommend you whitelist your own IPs so you can connect to the cluster with kubectl etc
 * Rancher's IP must be whitelisted otherwise it won't be able to complete the provisioning of Kubernetes
-
+* The Hetzner Cloud API allows 3600 requests per hour, per project. Because each node will make a request every minute, this means that this solution will work just fine with up to 60 nodes in the project.
 
 
 ```yaml
