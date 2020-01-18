@@ -11,6 +11,6 @@ chmod +x /usr/local/bin/update-ufw.sh
 
 /usr/local/bin/update-ufw.sh
 
-cat <<EOF >> /root/crontab
+cat <<EOF >> /etc/crontab
 * * * * * /usr/local/bin/update-ufw.sh ${TOKEN} ${WHITELIST_S}
 EOF
