@@ -1,7 +1,32 @@
 #!/bin/bash
 
-TOKEN="$1"
-WHITELIST_S="$2"
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+  --hcloud-token)
+    TOKEN="$2"
+    shift
+    shift
+  ;;
+  --whitelisted-ips)
+    WHITELIST_S="$2"
+    shift
+    shift
+  ;;
+  --floating-ips)
+    FLOATING_IPS="--floating-ips"
+    shift
+  ;;
+  *)
+    shift
+  ;;
+esac
+done
+
+FLOATING_IPS=${FLOATING_IPS:-""}
+
 
 sed -i 's/[#]*PermitRootLogin yes/PermitRootLogin prohibit-password/g' /etc/ssh/sshd_config
 sed -i 's/[#]*PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
@@ -14,9 +39,9 @@ chmod +x /usr/local/sbin/apt-get
 
 apt-get install -y jq ufw fail2ban
 
-curl -o /usr/local/bin/update-ufw.sh https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/update-ufw.sh
+curl -o /usr/local/bin/update-config.sh https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/update-config.sh
 
-chmod +x /usr/local/bin/update-ufw.sh
+chmod +x /usr/local/bin/update-config.sh
 
 ufw allow proto tcp from any to any port 22,80,443
 
@@ -34,8 +59,9 @@ ufw allow from 10.42.0.0/16
 ufw -f default deny incoming
 ufw -f default allow outgoing
 
-/usr/local/bin/update-ufw.sh ${TOKEN} ${WHITELIST_S}
-
 cat <<EOF >> /etc/crontab
-* * * * * root /usr/local/bin/update-ufw.sh ${TOKEN} ${WHITELIST_S}
+* * * * * root /usr/local/bin/update-config.sh  --hcloud-token ${TOKEN} --whitelisted-ips ${WHITELIST_S} ${FLOATING_IPS}
 EOF
+
+/usr/local/bin/update-config.sh --hcloud-token ${TOKEN} --whitelisted-ips ${WHITELIST_S} ${FLOATING_IPS}
+
