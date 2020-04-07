@@ -37,7 +37,7 @@ curl -o /usr/local/sbin/apt-get https://raw.githubusercontent.com/vitobotta/hetz
 
 chmod +x /usr/local/sbin/apt-get
 
-/usr/local/sbin/apt-get install -y jq ufw fail2ban
+apt-get install -y jq ufw fail2ban
 
 curl -o /usr/local/bin/update-config.sh https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/update-config.sh
 
