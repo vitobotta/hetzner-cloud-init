@@ -15,4 +15,6 @@ while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
     ((i=i+1))
 done 
 
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
 /usr/bin/apt-get "$@"
