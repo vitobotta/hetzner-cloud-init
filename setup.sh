@@ -37,6 +37,7 @@ curl -o /usr/local/sbin/apt-get https://raw.githubusercontent.com/vitobotta/hetz
 
 chmod +x /usr/local/sbin/apt-get
 
+export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y jq ufw fail2ban
 
