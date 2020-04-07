@@ -33,27 +33,11 @@ sed -i 's/[#]*PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/s
 
 systemctl restart sshd
 
+curl -o /usr/local/sbin/apt-get https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/apt-get
 
-i=0
-tput sc
-while fuser /var/lib/dpkg/lock >/dev/null 2>&1 ; do
-    case $(($i % 4)) in
-        0 ) j="-" ;;
-        1 ) j="\\" ;;
-        2 ) j="|" ;;
-        3 ) j="/" ;;
-    esac
-    tput rc
-    echo -en "\r[$j] Waiting for other software managers to finish..." 
-    sleep 0.5
-    ((i=i+1))
-done 
+chmod +x /usr/local/sbin/apt-get
 
-export DEBIAN_FRONTEND=noninteractive
-
-apt-get update
-apt-get install -y jq ufw fail2ban
-
+/usr/local/sbin/apt-get install -y jq ufw fail2ban
 
 curl -o /usr/local/bin/update-config.sh https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/update-config.sh
 
