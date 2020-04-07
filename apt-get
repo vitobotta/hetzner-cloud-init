@@ -17,4 +17,4 @@ done
 
 export DEBIAN_FRONTEND=noninteractive
 
-apt-get "$@"
+/usr/bin/apt-get "$@"
