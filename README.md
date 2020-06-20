@@ -23,6 +23,10 @@ NOTES:
 #cloud-config
 locale: en_GB.UTF-8
 
+packages:
+  - fail2ban
+  - jq
+
 runcmd:
   - "curl -s https://raw.githubusercontent.com/vitobotta/hetzner-cloud-init/master/setup.sh | bash -s -- --hcloud-token <TOKEN> --whitelisted-ips <WHITELIST> --floating-ips"
 ```
