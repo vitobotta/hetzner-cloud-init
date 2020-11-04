@@ -42,7 +42,7 @@ curl -o /usr/local/bin/update-config.sh https://raw.githubusercontent.com/vitobo
 
 chmod +x /usr/local/bin/update-config.sh
 
-ufw allow proto tcp from any to any port 22,80,443
+ufw allow proto tcp from any to any port 22,80,443,2376
 
 ufw -f enable
 
