@@ -44,8 +44,6 @@ chmod +x /usr/local/bin/update-config.sh
 
 ufw allow proto tcp from any to any port 22,80,443
 
-ufw -f enable
-
 IFS=', ' read -r -a WHITELIST <<< "$WHITELIST_S"
 
 for IP in "${WHITELIST[@]}"; do
@@ -59,6 +57,8 @@ ufw allow from 10.244.0.0/16 # in case we use the default cidr expected by the c
 
 ufw -f default deny incoming
 ufw -f default allow outgoing
+
+ufw -f enable
 
 cat <<EOF >> /etc/crontab
 * * * * * root /usr/local/bin/update-config.sh --hcloud-token ${TOKEN} --whitelisted-ips ${WHITELIST_S} ${FLOATING_IPS}
